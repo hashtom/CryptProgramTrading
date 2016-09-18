@@ -1,4 +1,9 @@
 require "./cptlib/Broker_zaif"
+require "./cptlib/Price"
+
+attr_accessor :price
+attr_accessor :broker_code
+attr_accessor :price
 
 class Broker
   def get_price
