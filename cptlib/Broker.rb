@@ -1,25 +1,33 @@
-require "./cptlib/Broker_zaif"
 require "./cptlib/Price"
 
-attr_accessor :price
-attr_accessor :broker_code
-attr_accessor :price
-
 class Broker
+
+attr_accessor :price
+attr_reader :broker_code
+
+  
+  def initialize(broker_code)
+    @broker_code = broker_code
+  end
+
   def get_price
-    
+
+    @price = Price.new()
+    @price.code="BTC"
+    @price.last_price=70000
+  
   end
   
   def calcel_all
     
   end
   
-  def place_order
-    
+  def place_order(order)
+    @order = order
   end
   
-  def calcel_order
-    
+  def calcel_order(order)
+    @order = order
   end
   
 end

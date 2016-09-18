@@ -1,10 +1,5 @@
 class Price
   
-attr_accessor :last_price
-attr_accessor :bid
-attr_accessor :ask
-attr_accessor :volume
-attr_accessor :vwap
-attr_accessor :volume
+attr_accessor :code,:last_price,:bid,:ask,:volume,:vwap,:volume,:price_datetime
 
 end
