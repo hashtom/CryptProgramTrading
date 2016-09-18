@@ -1,4 +1,4 @@
-require ".\cptlib\Broker_zaif"
+require "./cptlib/Broker_zaif"
 
 class Broker
   def get_price
