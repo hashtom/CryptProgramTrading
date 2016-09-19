@@ -3,3 +3,4 @@ tesst_zaif.rb
 test_zaif_trading.rb
 .gitigore
 .project
+Broker_bitflyer_test.rb
