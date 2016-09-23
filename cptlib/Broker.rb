@@ -5,6 +5,7 @@ require 'net/http'
 require 'uri'
 require "./cptlib/Price"
 require "./cptlib/Order"
+require "config.rb"
 
 class Broker
 
@@ -45,7 +46,7 @@ class BrokerZaif < Broker
     
   def get_price
     
-    @price = Price.new()
+    @price = Price.new(ZAIF_ADJ_FACTOR)
 
     json = @api.get_ticker(@code)
 

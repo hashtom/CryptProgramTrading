@@ -3,3 +3,4 @@
 
 # gem "rails"
 gem "zaif"
+gem 'ruby_coincheck_client'
