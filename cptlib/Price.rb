@@ -24,3 +24,14 @@ class Price
   
 end
 
+class PriceDepth
+  
+  def average_bid(min_trade_size)
+    
+  end
+  
+  def average_ask(min_trade_size)
+    
+  end
+  
+end

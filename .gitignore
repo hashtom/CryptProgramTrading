@@ -1,7 +1,7 @@
-tesst_zaif.rb
-test_zaif_trading.rb
 .gitigore
 .project
-Broker_bitflyer_test.rb
 config.rb
-btcprice_monitoring.xlsx
+test_bitflyer.rb
+test.rb
+test_zaif.rb
+test_zaif_trading.rb
