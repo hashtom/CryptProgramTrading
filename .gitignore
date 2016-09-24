@@ -2,6 +2,5 @@
 .project
 config.rb
 test_bitflyer.rb
-test.rb
-test_zaif.rb
 test_zaif_trading.rb
+test_zaif.rb

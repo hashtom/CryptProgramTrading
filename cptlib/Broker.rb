@@ -46,40 +46,57 @@ class BrokerZaif < Broker
     
   def get_price
     
-    @price = Price.new(ZAIF_ADJ_FACTOR)
+    price = Price.new(ZAIF_ADJ_FACTOR)
 
     json = @api.get_ticker(@code)
 
-    @price.code = @code
-    @price.last_price = json['last']
-    @price.vwap = json['vwap']
-    @price.bid = json['bid']
-    @price.ask = json['ask']
-    @price.datetime = DateTime.now
+    price.code = @code
+    price.last_price = json['last']
+    price.vwap = json['vwap']
+    price.bid = json['bid']
+    price.ask = json['ask']
+    price.datetime = DateTime.now
     
-    return @price
+    return price
     
   end
   
   def place_order(order)
-    @order = order
+
   end
   
   def calcel_order(order)
-    @order = order
+
   end
   
 end
 
 class BrokerBitFlyer < Broker
   
-uri = URI.parse("https://api.bitflyer.jp")
-uri.path = '/v1/getboard'
-uri.query = ''
+  def initialize()
+    @code = "btc"
+    @base_ccy = "jpy"
+  end
+    
+  def get_price
 
-https = Net::HTTP.new(uri.host, uri.port)
-https.use_ssl = true
-response = https.get uri.request_uri
-puts response.body
+    uri = URI.parse("https://api.bitflyer.jp")
+    uri.path = '/v1/ticker'
+    uri.query = ''
+    
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = true
+    response = https.get uri.request_uri
+    json = JSON.parse(response.body)
+    
+    price = Price.new()
+    price.code = @code
+    price.base_ccy= @base_ccy
+    price.last_price = json['ltp']
+    price.bid = json['best_bid']
+    price.ask = json['best_ask']
+    price.datetime = json['timestamp']
+    
+   return price
 
 end
