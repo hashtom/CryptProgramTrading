@@ -1,11 +1,12 @@
 require "zaif"
-#require "json"
+require "json"
 require "date"
 require 'net/http'
 require 'uri'
 require "./cptlib/Price"
 require "./cptlib/Order"
-require "config.rb"
+require "./config.rb"
+#require "pp"
 
 class Broker
 
@@ -18,8 +19,8 @@ attr_reader :broker_code
   end
 
   def get_price
-    @price = Price.new()
-    @price  
+    price = Price.new()
+    return price  
   end
   
   def calcel_all
@@ -61,12 +62,18 @@ class BrokerZaif < Broker
     
   end
   
-  def place_order(order)
-
-  end
-  
-  def calcel_order(order)
-
+  def get_depth()
+    
+    depth = PriceDepth.new(@code,"jpy")
+    
+    json = @api.get_depth(@code)
+    
+    json.each do |key,p|
+        depth.bidask = p.collect {|p| BidAsk.new(key,p[0],p[1])}
+    end
+    
+    return depth
+    
   end
   
 end
@@ -97,6 +104,8 @@ class BrokerBitFlyer < Broker
     price.ask = json['best_ask']
     price.datetime = json['timestamp']
     
-   return price
-
+    return price
+   
+   end
+   
 end

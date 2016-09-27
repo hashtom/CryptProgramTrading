@@ -1,3 +1,5 @@
+require "date"
+
 class Price
   
   attr_accessor :code,:base_ccy,:last_price,:bid,:ask,:vwap,:volume,:datetime
@@ -24,14 +26,69 @@ class Price
   
 end
 
+class BidAsk
+    attr_reader :bidask_type,:price_value,:volume
+    
+    def initialize(bidask_type,price_value,volume)
+      @bidask_type = bidask_type
+      @price_value = price_value
+      @volume = volume
+    end
+end
+
 class PriceDepth
   
-  def average_bid(min_trade_size)
-    
-  end
+    attr_accessor :code,:base_ccy,:bidask,:datetime   
   
-  def average_ask(min_trade_size)
+    def initialize(code,base_ccy)
+      @code = code
+      @base_ccy = base_ccy
+      @datetime = DateTime.now
+    end
     
-  end
+    #def self.add_bidask(bidask)
+    #  @bidask.push(bidask)
+    #end
+    
+    def get_bids_tradable(min_trade_size)
+      
+      #@bidask.select{|p| p.bidask_type=="bids"}.sort{|p| p.price_value}.collect{|p| p}
+      trade_size = 0
+      bids = Array.new()
+      bids_tradable = PriceDepth.new(@code,@base_ccy)
+#      while trade_size < min_trade_size
+        
+        @bidask.select{|p| p.bidask_type=="bids"}.sort{|p| -p.price_value}.collect{|p| p}.each do |p|
+          if trade_size < min_trade_size then
+            trade_size += p.price_value * p.volume
+            bids.push(p)
+          end
+        end
+        
+ #     end
+      
+      bids_tradable.bidask = bids
+      
+      return bids_tradable
+      
+    end
   
+    def average_price
+        trade_size = 0
+        total_volume = 0
+
+        @bidask.select{|p| p.bidask_type=="bids"}.collect{|p| p}.each do |p|
+          trade_size += p.price_value * p.volume
+          total_volume += p.volume 
+        end
+        return trade_size / total_volume 
+    end
+    
+    def trade_size
+        trade_size = 0
+        @bidask.select{|p| p.bidask_type=="bids"}.collect{|p| p}.each do |p|
+          trade_size += p.price_value * p.volume
+        end
+        return trade_size
+    end
 end
